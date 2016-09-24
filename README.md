@@ -1,4 +1,4 @@
 # BEDILM
 Bayesian Estimation of Depth-Integrated Lake Metabolism
 
-Download the code and folder structure for analysis as a zipped file. Please read the included code description and overview (pdf).
+R and JAGS code for estimating daily rates of gross primary production (GPP), ecosystem respriation (ER) and net ecosystem production (NEP) from depth-specific measurements of dissolved oxygen, temperature and light in lakes. Download the code and folder structure for analysis as a zipped file. Please read the included description of the code and guide for running analyses (pdf).
