@@ -1,0 +1,80 @@
+
+
+model
+	{
+	
+	# PRIORS
+		
+	#-------------------------------------------------------------
+
+	# Set estimation of parameters:
+	
+	# (Option 1) theta and p fixed 
+	theta <- 1.07177
+	p <- 1.0 
+	
+	# (Option 2) treat theta and p as estimable parameters
+	# theta ~ dnorm(0.0,0.25)I(1.0,1.3)
+	# p ~ dnorm(0.0,0.25)I(0.3,1.0) 
+
+	#-------------------------------------------------------------
+
+	# uninformed priors
+	R ~ dnorm(0,0.25)I(0,)	
+	A ~ dnorm(0,0.25)I(0,) 
+	
+	sd ~ dunif(0.001,0.2); tau <- 1/(sd*sd)
+	sec.per.day <- 24 * 60 * 60
+	temp.ave <- mean(TempC[])
+
+	Aprime <- A 
+	pprime <- p
+	gppts[num.measurements] <- 0
+	
+	# for posterior predictive assessment and goodness of fit evaluation
+	obs.resid[1] <- 0
+	ppa.resid[1] <- 0
+
+	# DO modelled
+	zz ~ dnorm(0,1000000)
+	DO.modelled[1] <- DO.meas[1] + zz # make monitorable
+		
+	for (i in 1:(num.measurements-1))
+		{		
+		# estimating primary production
+		gppts[i] <- Aprime*pow(PAR[i],pprime)		
+
+		DO.meas[i+1] ~ dnorm(DO.modelled[i+1], tau)
+                DO.modelled[i+1] <- DO.modelled[i] +
+			A * pow(PAR[i],p)
+			- R * (pow(theta,(TempC[i]-temp.ave)))
+			- ((  Ks.vect[i]*(DO.modelled[i] - DO.sat[i])/Zmix[i] ) *epi.dummy) *timestep	# calc.Ds.with.modDO = TRUE (Ds calculated with modelled temperature)
+			# - Ds[i] # calc.Ds.with.modDO = FALSE (Ds calculated with measured temperature) 
+			- Dv[i]
+			+ Dz[i]
+
+
+		### posterior predictive assessment nodes ###
+					
+		# plausible sampled value
+		DO.sampled.fit[i+1] ~ dnorm(DO.modelled[i+1], tau) #; ppb[i] <- ppa[i]
+		
+		# squared residuals		
+		obs.resid[i+1] <- pow((DO.meas[i+1] - DO.modelled[i+1]),2)
+		ppa.resid[i+1] <- pow((DO.sampled.fit[i+1] - DO.modelled[i+1]),2)
+		
+		}
+    
+	# for posterior predictive assessment and goodness of fit evaluation
+	sum.obs.resid <- sum(obs.resid[])
+	sum.ppa.resid <- sum(ppa.resid[])
+
+	PPfit <- step(sum.obs.resid - sum.ppa.resid)
+	
+	## Useful calculations
+	ER <- (R * sec.per.day) / (timestep*60*60)
+	GPP <- sum(gppts[])
+	NEP <- GPP - ER
+
+		
+}

@@ -1,0 +1,21 @@
+# temperature curve following Rimmer et al. 2006 J Hydrol 319: 163-175
+
+model
+	{
+
+  	for( i in 1 : n.meas ) {
+
+    			Tz[i] ~ dnorm(mu[i], tau)
+
+    			mu[i] <- Th +  ( (Te-Th) * pow(1/ (1+ pow((aa * z[i]),n)),(1-(1/n))) )
+			
+  			}
+
+  aa ~ dnorm(0.0, 0.01)I(0,)
+  n ~ dnorm(0.0, 0.01)I(0,)
+  tau  ~ dgamma(0.01, 0.01)
+
+}
+
+
+
