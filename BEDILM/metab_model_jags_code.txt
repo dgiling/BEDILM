@@ -23,7 +23,7 @@ model
 	R ~ dnorm(0,0.25)I(0,)	
 	A ~ dnorm(0,0.25)I(0,) 
 	
-	sd ~ dunif(0.001,0.2); tau <- 1/(sd*sd)
+	tau~dgamma(1,0.001)
 	sec.per.day <- 24 * 60 * 60
 	temp.ave <- mean(TempC[])
 
