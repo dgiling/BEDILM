@@ -169,11 +169,11 @@ library(zoo)
           
           if(length(non0)>1) 
             {
-            light.model <- lm(log(e[non0]+1)~meas.depths[non0])
+            light.model <- lm(log(e[non0])~meas.depths[non0])
             light.df$KD[i] <- as.numeric(coefficients(light.model)[2])
             
             options(warn = -1)
-            light.df$e.r2[i] <- cor(log(e[non0]+1), light.model$fitted.values)**2 
+            light.df$e.r2[i] <- cor(log(e[non0]), light.model$fitted.values)**2 
             options(warn = 0)
             }
           }
