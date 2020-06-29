@@ -365,7 +365,7 @@ library(zoo)
                   # piston velocity (m h-1), following Cole and Caraco (1998)
                   # Other formulations have been tested with this model: see Equations 6a-d in Staehr et al. 2012 (and associated references)
                   k600[i] <- (2.07 + 0.215*(U10[i]^1.7))/100  
-                  Ks[i,j] <- k600[i]*( (Sc[i,j]/600)^(-0.5)) # Jähne et al. (1987)
+                  Ks[i,j] <- k600[i]*( (Sc[i,j]/600)^(-0.5)) # JÃ¤hne et al. (1987)
       
                   # Ds flux (mg L^-1 m^-3 timestep^-1)
                   Ds.matrix[i,j] <- (Ks[i,j]*(DO.meas.matrix[i,j] - DO.sat.matrix[i,j]))/Zmix[i] 
@@ -405,7 +405,7 @@ library(zoo)
               }
               p.Zmax[i] <- (1-((6.63e-06)*((temp.Zmax[i]-4)^2)))*1000  # water density (kg m^-3)
                    
-              # Brunt Väisälä bouyancy frequency (s^-2)  
+              # Brunt VÃ¤isÃ¤lÃ¤ bouyancy frequency (s^-2)  
               for (j in 1:(num.layers-1)) {
                 N2[i,j] <-  - (  (g/p.matrix[i,j]) * ((p.matrix[i,j] - p.matrix[i,j+1])/(layer.thickness[j])) )
               }
@@ -457,7 +457,7 @@ library(zoo)
           #  Following Bell et al. 2006,  Staehr et al. 2012
             
           Dz.matrix <- matrix(NA, nrow = num.measurements, ncol= num.layers)
-          dZmix.dt <- 0; for (i in 2:num.measurements) { dZmix.dt[i]<- ((Zmix[i]-Zmix[i-1]) / timestep) } # Zmix deepening rate (m/s)
+          dZmix.dt <- 0; for (i in 2:num.measurements) { dZmix.dt[i]<- ((Zmix[i]-Zmix[i-1]) / timestep) } # Zmix deepening rate (m/h)
           
           # optional: set a maximum deepening rate to address issue of unrealisitic large Dz when there is short-term surface microstratification
           dZmix.dt[which(dZmix.dt>5)] <-0     # 
