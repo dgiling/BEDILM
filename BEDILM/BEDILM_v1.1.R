@@ -164,7 +164,7 @@ library(zoo)
           {
           e <- as.numeric( t( data.subset[i, PAR.cols] ) )
           non0 <- which(e!=0)
-          #plot(log(e[non0]+1)~meas.depths[non0])
+          #plot(log(e[non0])~meas.depths[non0])
           light.df$max.e[i] <- max(e, na.rm=T)
           
           if(length(non0)>1) 
