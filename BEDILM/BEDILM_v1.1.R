@@ -578,12 +578,12 @@ library(zoo)
           if (calc.Ds.with.modDO==T) {
             output.table$Ds.sum[row]<-sum(Ks.vect*(DO.mod.means - DO.sat)/Zmix ) *epi.dummy * timestep
           } else {
-            output.table$Ds.sum[row]<- sum(Ds.matrix[,j]*timestep)
+            output.table$Ds.sum[row]<- sum(Ds.matrix[,j])
           }
           output.table$N2[row]<- mean(N2[,j])
           output.table$Kv[row]<- mean(Kv[,j])
-          output.table$Dv.sum[row]<- sum(Dv.matrix[,j]*timestep)
-          output.table$Dz.sum[row]<- sum(Dz.matrix[,j]*timestep)
+          output.table$Dv.sum[row]<- sum(Dv.matrix[,j])
+          output.table$Dz.sum[row]<- sum(Dz.matrix[,j])
           output.table$PPP[row] <- metab$BUGSoutput$summary["PPfit","mean"]
           output.table$R2[row] <-  cor(DO.mod.means,DO.meas)^2
           output.table$pD[row]<-metab$BUGSoutput$pD
