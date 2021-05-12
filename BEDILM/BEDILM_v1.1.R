@@ -29,7 +29,6 @@ library(zoo)
 
 # System
     dir_input <- "C:/example/BEDILM" # set 'dir_input' to folder with this code
-    dir_input <- "C:/dg45koti/Dropbox/Code/Depth-integrated lake metabolism_v3/BEDILM" # set 'dir_input' to folder with this code
     
     data.file <- "Stechlin_example_2014_DOY_245-246.csv"
     
